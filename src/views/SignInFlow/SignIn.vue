@@ -3,6 +3,9 @@
     class="container"
     :class="{ 'light-background': !isDarkMode, 'dark-background': isDarkMode }"
   >
+  <transition
+  name="slide-in-right" enter-active-class="animated slideInRight"
+  > 
     <div
       class="request"
       :class="{ 'light-request': isDarkMode, 'dark-request': !isDarkMode }"
@@ -10,6 +13,7 @@
       Don't have a Design+Code HQ account?
       <router-link to="/request">Request an account</router-link>
     </div>
+    </transition>
     <div class="login">
       <img src="@/assets/logo.png" />
       <h4 :class="{ 'light-text': isDarkMode, 'dark-text': !isDarkMode }">
@@ -39,13 +43,13 @@
 <script>
 export default {
   name: "SignIn",
-  data: function() {
-    return { isDarkMode: true };
-  },
+ computed: {  
+   isDarkMode() {
+    return this.$store.getters.isDarkMode;
+  }},
   methods: {
     toggleDarkMode() {
-      this.isDarkMode = !this.isDarkMode;
-      document.body.style.background = this.isDarkMode ? "#212c4f" : "#f0f3f5";
+     this.$store.commit("toggleDarkMode");
     }
   }
 };
